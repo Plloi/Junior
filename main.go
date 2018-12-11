@@ -12,7 +12,8 @@ import (
 
 // Variables used for command line parameters
 var (
-	Token string
+	Token  string
+	Router *CommandRouter
 )
 
 func init() {
@@ -30,8 +31,10 @@ func main() {
 		return
 	}
 
+	Router = NewCommandRouter()
+
 	// Register the messageCreate func as a callback for MessageCreate events.
-	dg.AddHandler(messageCreate)
+	dg.AddHandler(Router.HandleCommand)
 
 	// Open a websocket connection to Discord and begin listening.
 	err = dg.Open()

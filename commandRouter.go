@@ -17,10 +17,13 @@ type CommandRouter struct {
 // NewCommandRouter Read the name
 func NewCommandRouter() *CommandRouter {
 	// cMap := make(map[string]func(*discordgo.Session, *discordgo.MessageCreate))
-	router := &CommandRouter{}
+	router := &CommandRouter{
+		commands: make(map[string]func(*discordgo.Session, *discordgo.MessageCreate)),
+		helpText: make(map[string]string),
+	}
+	router.commandPrefix = "sal!"
 
 	router.setup()
-	router.commandPrefix = "sal!"
 
 	return router
 }
@@ -63,7 +66,7 @@ func (c *CommandRouter) HandleCommand(s *discordgo.Session, m *discordgo.Message
 		// Check if command is registered
 		if f, ok := c.commands[args[0]]; ok {
 			// Remove command
-			m.Content = m.Content[len(args[0])+1:]
+			m.Content = m.Content[len(args[0]):]
 			// Call function
 			f(s, m)
 		} else {
