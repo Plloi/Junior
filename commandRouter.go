@@ -58,7 +58,7 @@ func (c *CommandRouter) RegisterCommand(command string, help string, f func(*dis
 // HandleCommand Takes Discord input and tries to find a relevant command, can be passed to discord-go's AddHandler
 func (c *CommandRouter) HandleCommand(s *discordgo.Session, m *discordgo.MessageCreate) {
 	// Check for bot trigger
-	if m.Content[:len(c.commandPrefix)] == c.commandPrefix {
+	if len(m.Content) > len(c.commandPrefix) && m.Content[:len(c.commandPrefix)] == c.commandPrefix {
 		// trim prefix
 		m.Content = m.Content[len(c.commandPrefix):]
 		args := strings.Split(m.Content, " ")
