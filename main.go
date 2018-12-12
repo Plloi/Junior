@@ -9,12 +9,14 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/plloi/Junior/commands"
+	"github.com/plloi/Junior/router"
 )
 
 // Variables used for command line parameters
 var (
 	Token  string
-	Router *CommandRouter
+	Router *router.CommandRouter
+	SAL    *commands.SAL
 )
 
 func init() {
@@ -32,9 +34,13 @@ func main() {
 		return
 	}
 
-	Router = NewCommandRouter()
-
+	Router = router.NewCommandRouter()
+	Router.CommandPrefix = "pj!"
+	Router.RegisterCommand("prefix", "Sets the bot command prefix (Admin Locked)", Router.SetPrefix)
 	Router.RegisterCommand("8ball", "Get A yes/answer from the magic B-ball.", commands.Roll8Ball)
+
+	SAL = commands.NewSAL()
+	Router.RegisterCommand("sal", "Smash Amiibo League parent command", SAL.SAL)
 
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(Router.HandleCommand)

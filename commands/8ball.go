@@ -30,6 +30,7 @@ var standardAnswers = [20]string{
 	"Very doubtful.",
 }
 
+// Roll8Ball Rolls a standard Magic 8-ball
 func Roll8Ball(s *discordgo.Session, m *discordgo.MessageCreate) {
 	rand.Seed(time.Now().UnixNano())
 	s.ChannelMessageSend(m.ChannelID, standardAnswers[rand.Intn(len(standardAnswers))])
