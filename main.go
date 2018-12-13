@@ -37,10 +37,9 @@ func main() {
 	Router = router.NewCommandRouter()
 	Router.CommandPrefix = "pj!"
 	Router.RegisterCommand("prefix", "Sets the bot command prefix (Admin Locked)", Router.SetPrefix)
-	Router.RegisterCommand("8ball", "Get A yes/answer from the magic B-ball.", commands.Roll8Ball)
 
-	SAL = commands.NewSAL()
-	Router.RegisterCommand("sal", "Smash Amiibo League parent command", SAL.SAL)
+	//Import commands module
+	commands.Setup(Router)
 
 	// Register the messageCreate func as a callback for MessageCreate events.
 	dg.AddHandler(Router.HandleCommand)

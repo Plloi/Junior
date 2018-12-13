@@ -1,7 +1,10 @@
 package commands
 
 import (
+	"fmt"
+
 	"github.com/bwmarrin/discordgo"
+	"github.com/plloi/Junior/database"
 	"github.com/plloi/Junior/models"
 	"github.com/plloi/Junior/router"
 )
@@ -52,5 +55,17 @@ func (sal *SAL) SAL(s *discordgo.Session, m *discordgo.MessageCreate) {
 	sal.router.HandleCommand(s, m)
 }
 func (sal *SAL) add(s *discordgo.Session, m *discordgo.MessageCreate) {
-	notImplemented(s, m)
+	DB := database.NewDatastore("Meep")
+	Test := &models.Amiibo{
+		Serial:      "10000",
+		Description: "Test Amiibo",
+	}
+	id, err := DB.Add(Test)
+	if err != nil {
+		s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("Error: %v", err))
+	} else {
+		s.ChannelMessageSend(m.ChannelID, fmt.Sprintf("ID: %v", id))
+	}
+	// notImplemented(s, m)
+	return
 }

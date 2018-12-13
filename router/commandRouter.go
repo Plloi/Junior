@@ -20,17 +20,11 @@ func NewCommandRouter() *CommandRouter {
 		commands: make(map[string]func(*discordgo.Session, *discordgo.MessageCreate)),
 		helpText: make(map[string]string),
 	}
-	router.CommandPrefix = "!"
 
-	router.setup()
+	router.CommandPrefix = "!"
+	router.RegisterCommand("help", "This help text", router.help)
 
 	return router
-}
-
-func (c *CommandRouter) setup() {
-	c.RegisterCommand("help", "This help text", c.help)
-	// TODO Move to separate command module
-	// c.RegisterCommand("echo", "Make the bot say something (Server Admin only)", c.echo)
 }
 
 func (c *CommandRouter) help(s *discordgo.Session, m *discordgo.MessageCreate) {
@@ -41,15 +35,9 @@ func (c *CommandRouter) help(s *discordgo.Session, m *discordgo.MessageCreate) {
 	s.ChannelMessageSend(m.ChannelID, helpMessage)
 }
 
-func (c *CommandRouter) echo(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if ok, _ := memberHasPermission(s, m.GuildID, m.Author.ID, discordgo.PermissionAdministrator); ok {
-		s.ChannelMessageSend(m.ChannelID, m.Content)
-	}
-}
-
 // SetPrefix Set the bot's trigger prefix(default !) to message string, not inncluded by default in the command list, make sure to register
 func (c *CommandRouter) SetPrefix(s *discordgo.Session, m *discordgo.MessageCreate) {
-	if ok, _ := memberHasPermission(s, m.GuildID, m.Author.ID, discordgo.PermissionAdministrator); ok {
+	if ok, _ := MemberHasPermission(s, m.GuildID, m.Author.ID, discordgo.PermissionAdministrator); ok {
 		//TODO: Save prefix per guild
 		c.CommandPrefix = m.Content
 	}
@@ -110,7 +98,7 @@ func (c *CommandRouter) HandleCommand(s *discordgo.Session, m *discordgo.Message
 //     guildID    :  guildID of the member you wish to check the roles of
 //     userID     :  userID of the member you wish to retrieve
 //     permission :  the permission you wish to check for
-func memberHasPermission(s *discordgo.Session, guildID string, userID string, permission int) (bool, error) {
+func MemberHasPermission(s *discordgo.Session, guildID string, userID string, permission int) (bool, error) {
 	member, err := s.State.Member(guildID, userID)
 	if err != nil {
 		if member, err = s.GuildMember(guildID, userID); err != nil {

@@ -3,64 +3,47 @@ package database
 import (
 	"context"
 	"fmt"
+	"reflect"
 
 	"cloud.google.com/go/datastore"
 )
 
-const projectID = "Loadme!"
-
 type datastoreDB struct {
 	client *datastore.Client
+	ctx    context.Context
 }
 
-// Amiibo Todo remove
-type Amiibo struct {
-	ID   int64
-	name string
+// NewDatastore .
+func NewDatastore(projectID string) *datastoreDB {
+	DS := &datastoreDB{
+		ctx: context.Background(),
+	}
+	DS.getClient(projectID)
+	return DS
 }
 
-func notmain() {
-	ctx := context.Background()
-	client, err := datastore.NewClient(ctx, projectID)
-
+func (db *datastoreDB) getClient(projectID string) {
+	client, err := datastore.NewClient(db.ctx, projectID)
 	if err != nil {
+		fmt.Printf("Error: Unable to create datastore client: %v", err)
 		return
 	}
-
-	dataStore, _ := newDatastoreDB(client)
-
-	key, err := dataStore.AddAmiibo(&Amiibo{name: "Test"})
+	t, err := client.NewTransaction(db.ctx)
 	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-	}
-	fmt.Printf("key: %v\n", key)
-	amii, err := dataStore.GetAmiibo(key)
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-	}
-	fmt.Printf("key: %v\n", amii)
-}
-
-func newDatastoreDB(client *datastore.Client) (*datastoreDB, error) {
-	ctx := context.Background()
-	// Verify that we can communicate and authenticate with the datastore service.
-	t, err := client.NewTransaction(ctx)
-	if err != nil {
-		return nil, fmt.Errorf("datastoredb: could not connect: %v", err)
+		fmt.Printf("datastoredb: could not connect: %v", err)
+		return
 	}
 	if err := t.Rollback(); err != nil {
-		return nil, fmt.Errorf("datastoredb: could not connect: %v", err)
+		fmt.Printf("datastoredb: could not connect: %v", err)
+		return
 	}
-	return &datastoreDB{
-		client: client,
-	}, nil
+	db.client = client
+	return
 }
 
-func (db *datastoreDB) AddAmiibo(a *Amiibo) (id int64, err error) {
-	fmt.Printf("Putiing amiibo: %v\n", a)
-	ctx := context.Background()
-	k := datastore.IncompleteKey("amiibo", nil)
-	k, err = db.client.Put(ctx, k, a)
+func (db *datastoreDB) Add(a interface{}) (id int64, err error) {
+	k := datastore.IncompleteKey(reflect.TypeOf(a).String(), nil)
+	k, err = db.client.Put(db.ctx, k, a)
 	if err != nil {
 		return 0, fmt.Errorf("datastoredb: could not put amiibo: %v", err)
 	}
@@ -68,6 +51,7 @@ func (db *datastoreDB) AddAmiibo(a *Amiibo) (id int64, err error) {
 	return k.ID, nil
 }
 
+/*
 // GetBook retrieves a book by its ID.
 func (db *datastoreDB) GetAmiibo(id int64) (*Amiibo, error) {
 	ctx := context.Background()
@@ -84,3 +68,4 @@ func (db *datastoreDB) GetAmiibo(id int64) (*Amiibo, error) {
 func (db *datastoreDB) datastoreKey(id int64) *datastore.Key {
 	return datastore.IDKey("amiibo", id, nil)
 }
+*/
