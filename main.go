@@ -8,8 +8,8 @@ import (
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/plloi/Junior/commands"
-	"github.com/plloi/Junior/router"
+	"github.com/Plloi/Junior/commands"
+	"github.com/Plloi/Junior/router"
 )
 
 // Variables used for command line parameters
