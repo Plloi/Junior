@@ -7,7 +7,7 @@ addons:
   conarcloud:
     organization: "plloi-github"
 script:
-  sonar-scanner
+  - sonar-scanner
 deploy:
   provider: releases
   api_key:
