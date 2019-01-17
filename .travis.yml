@@ -1,4 +1,11 @@
-  language: go
-  go:
-  - "1.10.x"
-  - master
+language: go
+go:
+- 1.10.x
+- master
+deploy:
+  provider: releases
+  api_key:
+    secure: OCHZyOh04JrKW77PAZlmDDf2296ML5GKY77Kok2iEYYO8TZ7CNoIWVIwZc+uiTgibxy0AoHs3/rHvCf1Eg2b8AsaJADhgS+4NXfejb6x2EeHC+tZEhWHFpocHniGhO3aud7BWQe72cxP+zFyOOB3Bs/pyjrGtldxP2w/GBixFwzjIAiTrq2LyTe8dDgLrhOw6eUyO+NQmbsM7rwc6rwTM5LZ/yB+lfPEBglmR/dU3Kn2XB0mAOo+/wpfQMFCroDpNqMtEiGEjEQzTcY25PS4yBcgZNxYqrhVCFfkVBUS+uh56H3GcC1FC8bKwvBeS8/Fn3QQMDOhShA8Uu3GCSQdck+Ca+N8uxSENrPtdimFc+uaVCZYaDvhmdNlIMUK6Nhi9itIzMnRaRLUOM74Gl1EcGrEFEABfWiasBSk2DJ7w9FKFG44DG/IZICHYRPR2BNcfZabCoZrFmpJA8ArGfHbL6w6E5NtBwVsw4SjrD1RXzUo1JXq4S+5XG8+DToWdTxXIBOXsFSgIqydV7uGqdvLbxfRRif0TEgHWYtyDUFwqPdc0EpjsX+9GjrpOpGruje6te8ExScLSajTNss43PMfs6kTt5H9rDGcX10Ijffek+7j13GAOYJfzEfBLRk16BnI0pO2BDqelmBkfhIsx+ZPgXzlogj/a8JaTmlGanAGE9A=
+  file: Junior
+  on:
+    repo: Plloi/Junior
