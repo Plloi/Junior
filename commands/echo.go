@@ -2,7 +2,7 @@ package commands
 
 import (
 	"github.com/bwmarrin/discordgo"
-	"github.com/plloi/Junior/router"
+	"github.com/Plloi/Junior/router"
 )
 
 func echo(s *discordgo.Session, m *discordgo.MessageCreate) {
