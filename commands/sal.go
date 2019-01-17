@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/plloi/Junior/database"
-	"github.com/plloi/Junior/models"
-	"github.com/plloi/Junior/router"
+	"github.com/Plloi/Junior/database"
+	"github.com/Plloi/Junior/models"
+	"github.com/Plloi/Junior/router"
 )
 
 // SAL Struct for the Smash Amiibo League Bot Module
