@@ -43,11 +43,11 @@ steps:
     rootFolderOrFile: '$(modulePath)/Junior'
     includeRootFolder: false
     archiveType: 'tar'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar.gz'
+    archiveFile: '$(modulePath)/Junior.tar.gz'
     replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).tar.gz'
+    PathtoPublish: '$(modulePath)/Junior.tar.gz'
     ArtifactName: 'drop'
     publishLocation: 'Container'
