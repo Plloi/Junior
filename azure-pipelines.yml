@@ -37,8 +37,17 @@ steps:
     go build -v .
   workingDirectory: '$(modulePath)'
   displayName: 'Get dependencies, then build'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(modulePath)/Junior'
+    includeRootFolder: false
+    archiveType: 'tar'
+    archiveFile: '$(modulePath)/Junior.tar.gz'
+    replaceExistingArchive: true
+
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(modulePath)'
+    PathtoPublish: '$(modulePath)/Junior.tar.gz'
     ArtifactName: 'drop'
     publishLocation: 'Container'
