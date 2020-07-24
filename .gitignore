@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+Junior
 
 # Test binary, build with `go test -c`
 *.test
@@ -13,3 +14,10 @@
 
 #ignore vedor subdir
 /vendor
+
+#Runing Data
+/settings
+.env
+
+#vscode stuff
+/.vscode
