@@ -1,8 +1,8 @@
 package commands
 
 import (
+	"github.com/Plloi/pdb-cmdr/pkg/router"
 	"github.com/bwmarrin/discordgo"
-	"github.com/Plloi/Junior/router"
 )
 
 func echo(s *discordgo.Session, m *discordgo.MessageCreate) {

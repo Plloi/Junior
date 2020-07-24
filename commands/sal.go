@@ -3,10 +3,10 @@ package commands
 import (
 	"fmt"
 
-	"github.com/bwmarrin/discordgo"
 	"github.com/Plloi/Junior/database"
 	"github.com/Plloi/Junior/models"
-	"github.com/Plloi/Junior/router"
+	"github.com/Plloi/pdb-cmdr/pkg/router"
+	"github.com/bwmarrin/discordgo"
 )
 
 // SAL Struct for the Smash Amiibo League Bot Module
@@ -29,7 +29,7 @@ func NewSAL() *SAL {
 	sal.getFighters()
 	sal.getMatches()
 	sal.router = router.NewCommandRouter()
-	sal.router.CommandPrefix = ""
+	sal.router.DefaultPrefix = ""
 	sal.router.RegisterCommand("add", "Adds a new Amiibo or figther (Not implemented)", sal.add)
 	return sal
 }
